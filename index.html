@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<style>
+  .sp{
+    margin-left: 90px;
+  }
+</style>
+  </head>
+<body>
+     <!-- <div class="container bg-light w-50 border mt-5">
+        <div class="row p-5">
+            <div class="col-3"></div> 
+            <div class="col-6"> 
+                <input type="text" id="cname" placeholder="Enter City Name" class="form-control"> 
+    <button class="btn btn-dark mt-3 sp" type="button"   onclick="search()">Search</button>
+            </div>   
+          </div>
+          </div> -->
+          <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"><b>WEATHER</b></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                
+                <form class="d-flex ms-auto" role="search">
+                  <input class="form-control me-2" id="cname" type="search" placeholder="Enter City" aria-label="Search">
+                  <button class="btn btn-secondary" type="button" onclick="search()">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="" id="result">
+              </div>
+              <div class="col-4"></div>
+          </div>  
+</body>
+<script >
+  function search()
+  {
+      city=cname.value
+      //to view data in console
+      //        fetch(`https://restcountries.com/v2/name/${country}?fullText=tru`).then(msg=>msg.json())
+      // .then(data=>console.log(data))
+
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=1fad26d37db6e1d366280cef5904c581`).then(msg=>msg.json())
+      .then(data=>disp(data))
+  }
+  function disp(countrydet)
+  {
+      cname=countrydet.name
+      tmp=countrydet.main.temp
+      hum=countrydet.main.humidity
+      sp=countrydet.wind.speed
+      dg=countrydet.wind.deg
+des=countrydet.weather[0].description
+cntry=countrydet.sys.country
+      htmldata=`<section class="vh-100" style="background-color: #4B515D;">
+  <div class="container py-5 h-100">
+
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+
+        <div class="card" style="color: #4B515D; border-radius: 35px;">
+          <div class="card-body p-4">
+
+            <div class="d-flex">
+              <h6 class="flex-grow-1">${cname}</h6>
+              <h6>${cntry}</h6>
+            </div>
+
+            <div class="d-flex flex-column text-center mt-5 mb-4">
+              <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> ${tmp}</h6>
+              <span class="small" style="color: #868B94">${des}</span>
+            </div>
+
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1" style="font-size: 1rem;">
+                <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">Wind: ${sp} km/h
+                  </span></div>
+                <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">Humidity: ${hum}% </span>
+                </div>
+                <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">Deg: ${dg} </span>
+                </div>
+              </div>
+              <div>
+                <img src="./images/partly_cloudy.png" alt="" width="100px">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section> `
+//       htmldata=`<div class="card" style="width: 18rem;">
+// <div class="card-body">
+//   <h5 class="card-title">${cname}</h5>
+// </div>
+// <ul class="list-group list-group-flush">
+//   <li class="list-group-item">${tmp}</li>
+//   <li class="list-group-item">${hum}</li>
+//   <li class="list-group-item">${sp}</li>
+//   <li class="list-group-item">${dg}</li>
+ 
+
+// </ul>
+// </div>
+//       `
+      result.innerHTML+=htmldata
+  }
+
+</script>
+
+</html>
